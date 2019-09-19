@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tuplestores.admin.dao.AuthenticationDao;
 import com.tuplestores.admin.dao.DispatchDBConnection;
+import com.tuplestores.admin.model.ApiResponse;
 import com.tuplestores.admin.model.Driver;
 import com.tuplestores.admin.model.User;
 
@@ -101,7 +102,7 @@ public class AuthenticationDaoImpl implements AuthenticationDao{
 			rs=callableStatement.executeQuery();
 			lstDriver = new ArrayList<Driver>();
 			
-			if(rs.next()) {
+			while(rs.next()) {
 				
 
 				
@@ -150,5 +151,63 @@ public class AuthenticationDaoImpl implements AuthenticationDao{
 		
 		
 	}
+
+	public ApiResponse addDriver(String tenant_id, String email, 
+								String first_name, String last_name, String isd_code,
+									String mobile, String i_invite_code) {
+		
+		
+			java.sql.CallableStatement callableStatement = null;
+			Connection con = null;
+			ApiResponse api = null;
+			String out = "E";
+			try {
+				api= new ApiResponse();
+				con = dispatchDBConnection.getJdbcTemplate().getDataSource().getConnection();
+				callableStatement = con.prepareCall("{call ap_create_driver_p(?,?,?,?,?,?,?,?)}");
+				callableStatement.setString(1, tenant_id);
+				callableStatement.setString(2, email);
+				callableStatement.setString(3, first_name);
+				callableStatement.setString(4,last_name);
+				callableStatement.setString(5, isd_code);
+				callableStatement.setString(6, mobile);
+				callableStatement.setString(7, i_invite_code);
+				callableStatement.registerOutParameter(8, java.sql.Types.CHAR);
+				callableStatement.executeUpdate();
+				out = callableStatement.getString(8);
+				api.setStatus(out);
+				api.setMsg("Message");
+
+			}catch(Exception e) {
+				api.setStatus("E");
+
+				e.printStackTrace();
+			}finally {
+
+				if(callableStatement!=null) {
+					try {
+						callableStatement.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+				if(con!=null)
+					try {
+						con.close();
+					}catch(SQLException ex) {
+						ex.printStackTrace();
+					}
+			}
+
+			return api;
+
+
+
+
+
+
+		}
 
 }

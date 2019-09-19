@@ -74,6 +74,8 @@ $(document).ready( function () {
 	
 	fillDriverTable($('#hid').val());
 	
+	
+	
 });
 </script>
  <script src="${pageContext.request.contextPath}/resources/js/pages/drivers.js"></script>

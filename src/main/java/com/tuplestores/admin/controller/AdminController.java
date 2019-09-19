@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tuplestores.admin.model.ApiResponse;
 import com.tuplestores.admin.model.Driver;
 import com.tuplestores.admin.model.User;
 import com.tuplestores.admin.service.AuthenticationService;
+
 
 
 @Controller
@@ -140,6 +142,29 @@ public class AdminController {
 		}
 		return lstDrivers;
 
+	}
+	
+	@RequestMapping(value = "/addDrivers", method = RequestMethod.GET)
+	public @ResponseBody Object addDrivers( @RequestParam String i_tenant_id,
+													@RequestParam String i_email,
+													@RequestParam String i_first_name,
+													@RequestParam String i_last_name,
+													@RequestParam String i_isd_code,
+													@RequestParam String i_mobile,
+													@RequestParam String i_invite_code
+													)   {
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		ApiResponse api = null;
+		try {
+			 api=authenticationService.addDriver(i_tenant_id, i_email, i_first_name, i_last_name,
+					 i_isd_code, i_mobile, i_invite_code);
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+		}
+		return new ResponseEntity<ApiResponse>(api,httpHeaders,HttpStatus.OK);
 	}
 
 }

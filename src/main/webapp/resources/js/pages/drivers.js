@@ -50,5 +50,44 @@ function fillDriverTable( tenantId){
 	    }
 	});
 	
-	
 }
+	
+	function addDriver(){
+		
+		var tenantId = $('#hid').val();
+		alert(tenantId);
+		var fname = $('#txtFirstName').val();
+		var lname = $('#txtLastName').val();
+		var email= $('#txtEmail').val();
+		var isd = $('#txtISD').val();
+		var mobile= $('#txtMobile').val();
+		var invitecode = $('#txtVerificationCode').val();
+
+		
+		$.ajax({
+		    type : "GET",
+		    url : "addDrivers",
+		    data : {
+		        "i_tenant_id" : tenantId,
+		        "i_email" : email,
+		        "i_first_name" : fname,
+		        "i_last_name" : lname,
+		        "i_isd_code" : isd,
+		        "i_mobile" : mobile,
+		        "i_invite_code" : invitecode
+		        
+		    },
+		    success: function(data){
+		    	
+		       if(data.status=="S"){
+		    	   
+		    	   window.location.href = "drivers.html"
+		    	   
+		       }
+		    }
+
+		});
+		
+	}
+	
+
