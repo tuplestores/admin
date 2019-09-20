@@ -22,6 +22,7 @@
 
 <body id="page-top">
 <input id ="hid" type="hidden" value=${user.tenant_id} />
+<input id ="hid2" type="hidden" value="" />
   <!-- Page Wrapper -->
   <div id="wrapper">
 

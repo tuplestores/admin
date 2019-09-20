@@ -166,5 +166,16 @@ public class AdminController {
 		}
 		return new ResponseEntity<ApiResponse>(api,httpHeaders,HttpStatus.OK);
 	}
+	
+	
+	@RequestMapping("/showUpdateDriver")
+	public ModelAndView showUpdateDriver(@ModelAttribute User user) {
+		System.out.println("in controller showUpdateDriver");
+ 
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("user", user);
+		mv.setViewName("updatedriver");
+		return mv;
+	}
 
 }

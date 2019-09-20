@@ -10,6 +10,7 @@ function fillDriverTable( tenantId){
 	var json = {"i_tenant_id":tenantId};
 	var status;
 	
+	//   	'<a href="#" class="btn btn-info btn-circle btn-sm">'+
 	$.ajax({
 	    type : "GET",
 	    url : "getdriverlist",
@@ -39,8 +40,8 @@ function fillDriverTable( tenantId){
             	data[i].checked_in_vehicle,
             	status,
             	'<a href="adddriver.htm" class="btn btn-warning btn-circle btn-sm">'+
-                '<i class="fas fa-edit"></i></a>'+
-            	'<a href="#" class="btn btn-info btn-circle btn-sm">'+
+                '<i class="fas fa-edit"></i></a>'+  
+            	'<a href="#" class="btn btn-info btn-circle btn-sm" onclick="showUpdateDriver(\''+data[i].driver_id+ '\')">'+
                 '<i class="fas fa-eye"></i></a> <a href="#" class="btn btn-danger btn-circle btn-sm">'+
                 '<i class="fas fa-trash"></i></a>'
             ] ).draw( false );
@@ -87,7 +88,59 @@ function fillDriverTable( tenantId){
 		    }
 
 		});
+
 		
 	}
+	
+
+	
+function updateDriver(){
+		
+		var tenantId = $('#hid').val();
+		alert(tenantId);
+		var fname = $('#txtFirstName').val();
+		var lname = $('#txtLastName').val();
+		var email= $('#txtEmail').val();
+		var isd = $('#txtISD').val();
+		var mobile= $('#txtMobile').val();
+		var invitecode = $('#txtVerificationCode').val();
+
+		
+		$.ajax({
+		    type : "GET",
+		    url : "addDrivers",
+		    data : {
+		        "i_tenant_id" : tenantId,
+		        "i_email" : email,
+		        "i_first_name" : fname,
+		        "i_last_name" : lname,
+		        "i_isd_code" : isd,
+		        "i_mobile" : mobile,
+		        "i_invite_code" : invitecode
+		        
+		    },
+		    success: function(data){
+		    	
+		       if(data.status=="S"){
+		    	   
+		    	   window.location.href = "drivers.html"
+		    	   
+		       }
+		    }
+
+		});
+
+		
+	}
+
+function showUpdateDriver(driverId){
+	
+	alert(driverId);
+	
+	  $('#hid').val(driverId);
+	  window.location.href = "showUpdateDriver.html"
+}
+	
+
 	
 
