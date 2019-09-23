@@ -108,7 +108,7 @@ function updateDriver(){
 		
 		$.ajax({
 		    type : "GET",
-		    url : "addDrivers",
+		    url : "updateDriver",
 		    data : {
 		        "i_tenant_id" : tenantId,
 		        "i_email" : email,
@@ -137,8 +137,37 @@ function showUpdateDriver(driverId){
 	
 	alert(driverId);
 	
-	  $('#hid').val(driverId);
+	  $('#hiddriver').val(driverId);
 	  window.location.href = "showUpdateDriver.html"
+}
+
+function getDriverDetailsbyId(){
+	
+	var driverid =  $('#hiddriver').val();
+	var tenantId = $('#hid').val();
+	
+	$.ajax({
+	    type : "GET",
+	    url : "getDriverDetailsbyId",
+	    data : {
+	        "i_tenant_id" : tenantId,
+	        "i_driver_id" : driverid
+	        
+	    },
+	    success: function(data){
+	    	
+	    	$('#txtFirstName').val(data.first_name);
+			$('#txtLastName').val(data.last_name);
+			$('#txtEmail').val(data.email);
+		    $('#txtISD').val(data.isd_code);
+			$('#txtMobile').val(data.mobile);
+			
+	       
+	    }
+
+	});
+
+	
 }
 	
 

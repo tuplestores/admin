@@ -177,5 +177,20 @@ public class AdminController {
 		mv.setViewName("updatedriver");
 		return mv;
 	}
+	
+	
+	@RequestMapping("/getDriverDetailsbyId")
+	public @ResponseBody Driver getDriverDetailsbyId() {
+		System.out.println("in controller getDriverDetailsbyId");
+		return null;
+ 
+	}
+	
+	@RequestMapping("/updateDriver")
+	public @ResponseBody Driver updateDriver() {
+		System.out.println("in controller getDriverDetailsbyId");
+		return null;
+ 
+	}
 
 }

@@ -128,7 +128,7 @@ function onlyOne2(checkbox) {
     }) */
     
 
-}
+//}
 </script>
  <script src="${pageContext.request.contextPath}/resources/js/pages/drivers.js"></script>  
       
