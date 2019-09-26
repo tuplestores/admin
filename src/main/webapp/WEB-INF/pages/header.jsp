@@ -22,7 +22,7 @@
 
 <body id="page-top">
 <input id ="hid" type="hidden" value=${user.tenant_id} />
-<input id ="hiddriver" type="hidden" value="" />
+<input id ="hiddriver" type="hidden" value=${user.did} />
   <!-- Page Wrapper -->
   <div id="wrapper">
 

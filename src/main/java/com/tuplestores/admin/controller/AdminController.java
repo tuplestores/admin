@@ -169,10 +169,11 @@ public class AdminController {
 	
 	
 	@RequestMapping("/showUpdateDriver")
-	public ModelAndView showUpdateDriver(@ModelAttribute User user) {
+	public ModelAndView showUpdateDriver(@RequestParam String id,  @ModelAttribute User user) {
 		System.out.println("in controller showUpdateDriver");
  
 		ModelAndView mv = new ModelAndView();
+        user.setDid(id);
 		mv.addObject("user", user);
 		mv.setViewName("updatedriver");
 		return mv;
@@ -180,17 +181,40 @@ public class AdminController {
 	
 	
 	@RequestMapping("/getDriverDetailsbyId")
-	public @ResponseBody Driver getDriverDetailsbyId() {
+	public @ResponseBody Object getDriverDetailsbyId(@RequestParam String i_tenant_id,
+														@RequestParam String i_driver_id) {
 		System.out.println("in controller getDriverDetailsbyId");
-		return null;
+		HttpHeaders httpHeaders = new HttpHeaders();
+		
+		Driver driver = authenticationService.getDriver(i_tenant_id, i_driver_id);
+		return new ResponseEntity<Driver>(driver,httpHeaders,HttpStatus.OK);
  
 	}
 	
+	
 	@RequestMapping("/updateDriver")
-	public @ResponseBody Driver updateDriver() {
-		System.out.println("in controller getDriverDetailsbyId");
-		return null;
+	public @ResponseBody Object updateDriver(@RequestParam String i_tenant_id,
+			@RequestParam String  i_driver_id,
+			@RequestParam String i_email,
+			@RequestParam String i_first_name,
+			@RequestParam String i_last_name,
+			@RequestParam String i_isd_code,
+			@RequestParam String i_mobile) {
+		System.out.println("in controller updateDriver");
+		HttpHeaders httpHeaders = new HttpHeaders();
+		ApiResponse api = null;
+		try {
+			 api=authenticationService.updateDriver(i_tenant_id,
+					 	i_driver_id, i_email, i_first_name, i_last_name, i_isd_code, i_mobile);
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+		}
+		return new ResponseEntity<ApiResponse>(api,httpHeaders,HttpStatus.OK);
  
 	}
+	
+	
 
 }

@@ -210,4 +210,127 @@ public class AuthenticationDaoImpl implements AuthenticationDao{
 
 		}
 
+	public Driver getDriver(String tenant_id, String i_driver_id) {
+		
+		Driver driver = null;
+		java.sql.CallableStatement callableStatement = null;
+		Connection con = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			con = dispatchDBConnection.getJdbcTemplate().getDataSource().getConnection();
+			
+			//callableStatement = con.prepareCall("{call ap_sign_in_p(?,?)}");
+			
+			
+			callableStatement = con.prepareCall("{call ap_get_driver_p(?,?)}");
+			
+			
+			callableStatement.setString(1,tenant_id);
+			callableStatement.setString(2,i_driver_id);
+			rs=callableStatement.executeQuery();
+		
+			
+			if(rs.next()) {
+				
+
+				
+				driver =new Driver();
+				driver.setDriver_id(rs.getString("driver_id"));
+				driver.setFirst_name(rs.getString("first_name"));
+				driver.setLast_name(rs.getString("last_name"));
+				driver.setMobile(rs.getString("mobile"));
+				driver.setIsd_code(rs.getString("isd_code"));
+				driver.setEmail(rs.getString("email"));
+				driver.setVerified(rs.getString("verified"));
+				
+				
+				
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(callableStatement!=null) {
+				try {
+					callableStatement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con!=null)
+				try {
+					con.close();
+					}catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+			
+		}
+		
+			return driver;
+	}
+
+	public ApiResponse updateDriver(String tenant_id, String i_driver_id, String email, String first_name,
+			String last_name, String isd_code, String mobile) {
+		
+	
+		
+		java.sql.CallableStatement callableStatement = null;
+		Connection con = null;
+		ApiResponse api = null;
+		String out = "E";
+		try {
+			api= new ApiResponse();
+			con = dispatchDBConnection.getJdbcTemplate().getDataSource().getConnection();
+			callableStatement = con.prepareCall("{call ap_update_driver_p(?,?,?,?,?,?,?,?)}");
+			callableStatement.setString(1, tenant_id);
+			callableStatement.setString(2, i_driver_id);
+			callableStatement.setString(3, email);
+			callableStatement.setString(4, first_name);
+			callableStatement.setString(5,last_name);
+			callableStatement.setString(6, isd_code);
+			callableStatement.setString(7, mobile);
+			callableStatement.registerOutParameter(8, java.sql.Types.CHAR);
+			callableStatement.executeUpdate();
+			out = callableStatement.getString(8);
+			api.setStatus(out);
+			api.setMsg("Message");
+
+		}catch(Exception e) {
+			api.setStatus("E");
+
+			e.printStackTrace();
+		}finally {
+
+			if(callableStatement!=null) {
+				try {
+					callableStatement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			if(con!=null)
+				try {
+					con.close();
+				}catch(SQLException ex) {
+					ex.printStackTrace();
+				}
+		}
+
+		return api;
+
+	}
+
 }

@@ -37,4 +37,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 				last_name, isd_code, mobile, i_invite_code);
 	}
 
+
+	public Driver getDriver(String tenant_id, String i_driver_id) {
+		
+		return authenticationDao.getDriver(tenant_id, i_driver_id);
+	}
+
+
+	public ApiResponse updateDriver(String tenant_id, String i_driver_id, String email, String first_name,
+			String last_name, String isd_code, String mobile) {
+		
+
+		 return authenticationDao.updateDriver(tenant_id, i_driver_id, email,
+				 first_name, last_name, isd_code, mobile);
+	}
+
 }

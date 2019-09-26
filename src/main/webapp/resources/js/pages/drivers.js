@@ -95,15 +95,25 @@ function fillDriverTable( tenantId){
 
 	
 function updateDriver(){
+	
+
+	//IN i_tenant_id VARCHAR(36),
+	//  IN i_driver_id VARCHAR(36),
+	//  IN i_email	  VARCHAR(50),
+	//  IN i_first_name VARCHAR(30),
+	//  IN i_last_name VARCHAR(30),
+	//  IN i_isd_code  VARCHAR(4),
+	//  IN i_mobile    VARCHAR(15),
 		
 		var tenantId = $('#hid').val();
-		alert(tenantId);
+	    var dirverId =  $('#hiddriver').val();
+
 		var fname = $('#txtFirstName').val();
 		var lname = $('#txtLastName').val();
 		var email= $('#txtEmail').val();
 		var isd = $('#txtISD').val();
 		var mobile= $('#txtMobile').val();
-		var invitecode = $('#txtVerificationCode').val();
+		
 
 		
 		$.ajax({
@@ -111,18 +121,18 @@ function updateDriver(){
 		    url : "updateDriver",
 		    data : {
 		        "i_tenant_id" : tenantId,
+		        "i_driver_id" : dirverId,
 		        "i_email" : email,
 		        "i_first_name" : fname,
 		        "i_last_name" : lname,
 		        "i_isd_code" : isd,
-		        "i_mobile" : mobile,
-		        "i_invite_code" : invitecode
-		        
+		        "i_mobile" : mobile
+	        
 		    },
 		    success: function(data){
 		    	
 		       if(data.status=="S"){
-		    	   
+		    	   alert("Driver updated successfully...")
 		    	   window.location.href = "drivers.html"
 		    	   
 		       }
@@ -135,16 +145,20 @@ function updateDriver(){
 
 function showUpdateDriver(driverId){
 	
-	alert(driverId);
+	//alert(driverId);
 	
-	  $('#hiddriver').val(driverId);
-	  window.location.href = "showUpdateDriver.html"
+	 
+	 
+	  window.location.href = "showUpdateDriver.html"+"?id="+driverId;
 }
 
 function getDriverDetailsbyId(){
 	
-	var driverid =  $('#hiddriver').val();
+	
 	var tenantId = $('#hid').val();
+	var driverid =  $('#hiddriver').val();
+	
+	//alert(driverid);
 	
 	$.ajax({
 	    type : "GET",

@@ -12,6 +12,16 @@ public class User {
 	private String tenant_id;
 	private String tenant_name;
 	private String invite;
+	private String did;
+	
+	
+	
+	public String getDid() {
+		return did;
+	}
+	public void setDid(String did) {
+		this.did = did;
+	}
 	public String getUserId() {
 		return userId;
 	}

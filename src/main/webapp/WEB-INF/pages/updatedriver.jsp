@@ -5,7 +5,7 @@
   <!-- Begin Page Content -->
         <div class="container-fluid">
               <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Add Driver</h1>
+            <h1 class="h3 mb-0 text-gray-800">Update Driver</h1>
           </div>
   <form class="form-horizontal" action="/action_page.php">
  <!--    <div class="form-group">
@@ -60,12 +60,12 @@
       </div>
       </div>
       
-      <div class="form-group">
+     <!--  <div class="form-group">
       <label class="control-label col-sm-2" for="number" >Verification Code</label>
       <div class="col-sm-10">
         <input type="text"  id="txtVerificationCode"  class="form-control" placeholder="Verification Code">
       </div>
-      </div>  
+      </div>   -->
 
     
 <!--     <div class="form-group">
@@ -103,13 +103,7 @@
       </div>
       <!-- End of Main Content -->
       
-    <script>
-
-$(document).ready( function () {
-	
-	
-	
-});
+   <jsp:include page="footer.jsp"></jsp:include> 
 
 
 /* function onlyOne(checkbox) {
@@ -128,16 +122,20 @@ function onlyOne2(checkbox) {
     }) */
     
 
- <script src="${pageContext.request.contextPath}/resources/js/pages/drivers.js"></script>  
  <script>
-    
- $(document).ready( function () {
-		
-	 getDriverDetailsbyId();	
-		
- });
+
+
+$(document).ready( function () {
+	
+	getDriverDetailsbyId();
+	
+	
+	
+});
+</script>
+ <script src="${pageContext.request.contextPath}/resources/js/pages/drivers.js"></script>
     
 
-</script>
+
       
-   <jsp:include page="footer.jsp"></jsp:include>
+  
